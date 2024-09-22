@@ -1,0 +1,21 @@
+h1{
+    background-color: beige;
+}
+p{
+    background-color: gray;
+}
+a{
+    background-color: pink;
+}
+b{
+    background-color: rgb(149, 149, 255);
+}
+strong{
+    background-color: rgb(86, 86, 255);
+}
+
+.inline_block__{
+    display: inline-block;
+    padding-top: 5%;
+    padding-bottom: 5%;
+}
