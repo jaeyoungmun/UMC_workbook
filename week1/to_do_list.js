@@ -3,68 +3,75 @@ var i = 0;
 function addTask(){ 
     // console.log(window.event)
     if (enterCheck()){ //엔터키 입력시
-        const input = document.querySelector('input');
+        const input = document.querySelector('.input_con > input');
         // console.log(input.value);
         
         if (inputCheck(input.value)){ //빈칸인지 체크
             //해야할일 생성
             const newDiv = document.createElement('div');
             newDiv.className = 'list ing_task';
+            newDiv.id = i;
 
             const textInput = document.createElement('div');
             textInput.className = 'textInput';
-            // textInput.setAttribute('contenteditable','true');
-            newDiv.appendChild(textInput);
-            textInput.textContent = input.value;
             textInput.id = i;
-            i++;
+            newDiv.appendChild(textInput);
+            textInput.textContent = input.value; //텍스트 삽입
+            
             const newBtn = document.createElement('button');
             newBtn.textContent = '완료'
             textInput.appendChild(newBtn);
-            newBtn.addEventListener('click', function(){ //완료시 해낸일로 이동
-                tasked(newDiv, newBtn);
+            
+
+
+            // 할일 클릭시 내용 수정기능
+            textInput.addEventListener('click', function(){ 
+                textInput.style.display = 'none';
+                const temp = document.createElement('input');
+                temp.value = textInput.textContent.replace('완료',''); 
+                temp.className = 'editInput';
+                temp.id = i;
+                newDiv.appendChild(temp);
+                
+                
+                temp.addEventListener('keydown', function(){
+                    if(enterCheck()){
+                        if(inputCheck(temp.value)){
+                            textInput.textContent = temp.value; //수정한 텍스트 div태그로 삽입
+                            temp.style.display = 'none';
+                            textInput.style.display = 'flex'; //다시 할일 박스 원상복구  
+                            //버튼이 안 보이길래 다시 생성
+                            const newBtn = document.createElement('button');
+                            newBtn.textContent = '완료'
+                            textInput.appendChild(newBtn);
+                            newBtn.addEventListener('click', function(){ //버튼 클릭시 해낸일로 이동
+                                textInput.style.display = 'flex';
+                                temp.style.display = 'none';
+                                tasked(newDiv, newBtn,textInput);
+                            });
+                        }
+                        else{
+                            alert('내용을 입력하십시오');
+                        }
+                    }
+                    newBtn.addEventListener('click', function(){ //버튼 클릭시 해낸일로 이동
+
+                        tasked(newDiv, newBtn,textInput);
+                    });
+                })
+            })
+
+            newBtn.addEventListener('click', function(){ //버튼 클릭시 해낸일로 이동
+                textInput.style.display = 'flex';
+                tasked(newDiv, newBtn,textInput);
             });
 
-            // input.focus();
-            // console.log(newDiv)
             const ing_list_box = document.querySelector('.ing_list_box');
             ing_list_box.appendChild(newDiv);
             newDiv.scrollIntoView(); //스크롤 새로운 DIV로 초점
             input.value = ''
+            i++; // 고유 id생성용
 
-
-            
-            /** 미완; 아무거나 갖다붙이다가 변수명 구분이 안되는 상황..
-            //텍스트에 커서 올리면 커서바뀌면서 클릭시에 텍스트 수정가능
-            textInput.addEventListener('click', function(){
-                // textInput.value를 받아두고 숨기기
-                // input태그로 바꾸고 value값 넣어두기
-                console.log(textInput.textContent, textInput.id);
-                //newDiv를 본 함수 내로 가져오는걸 못함 => 새로 쿼리셀렉터 사용 => 모든 클래스를 선택할거같음 //null값나옴 => id부여
-                const task_text = document.getElementById(textInput.id);
-                console.log(task_text);
-                task_text.style.display = 'hide';
-                var temp = document.createElement('input');
-                temp.className = 'tempInput';
-                temp.textContent = task_text.textContent //기존 텍스트가 그대로있게 해두기
-                ing_list_box.appendChild(temp);
-                if (enterCheck()){
-                    if(inputCheck()){
-                        textInput.textContent = temp.textContent
-                        task_text.style.display = 'show'
-                    }
-                    else{
-                        alert('내용을 입력하세요');
-                    }
-                }
-
-
-                 
-                // newBtn.style.display = 'hide';
-                // if (enterCheck){
-                //     newBtn.style.display = 'show';
-                // }
-            }); */
         }
         else{
             alert('내용을 입력하세요');
@@ -72,13 +79,15 @@ function addTask(){
     }
 }
 
-function tasked(newDiv, newBtn){
+function tasked(newDiv, newBtn, textInput){
     console.log(newDiv);
     newDiv.className = 'list ed_task';
+    textInput.textContent.replace('완료','');
     newBtn.textContent = '삭제';
+    newDiv.appendChild(newBtn);
     const ed_list_box = document.querySelector('.ed_list_box');
     ed_list_box.appendChild(newDiv);
-
+    newDiv.scrollIntoView();
     newBtn.addEventListener('click', () => {
         newDiv.remove();
     })
@@ -96,4 +105,21 @@ function enterCheck(){
     if (window.event.keyCode == 13) return true;
     else return false;
 }
-//
+
+function editInput(textInput,temp){
+    console.log('editInput');
+    
+    textInput.textContent = temp.textContent; //수정한 텍스트 div태그로 삽입
+    temp.style.display = 'none';
+    textInput.style.display = 'block'; //다시 할일 박스 원상복구
+        
+}
+
+function makebutton(textInput, newDiv){
+    const newBtn = document.createElement('button');
+    newBtn.textContent = '완료'
+    textInput.appendChild(newBtn);
+    newBtn.addEventListener('click', function(){ //완료시 해낸일로 이동
+        tasked(newDiv, newBtn);
+    });
+}

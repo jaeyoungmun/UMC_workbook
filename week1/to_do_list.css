@@ -11,7 +11,7 @@ button{
     border-radius: 7%;
     display: flex;
     flex-direction: row;
-    margin-left: 40%;
+    
 }
 button:hover{
     transform: scale(1.1);
@@ -65,20 +65,24 @@ h3{
     padding: 3%;
     width: 90%;
     border-bottom: 2px solid blue;/* solid가 아닌 일반 rgb값넣으면 색이 안 보임 */
-    /* cursor: pointer; */
-}
-.textInput{
-    display: flex;
-    flex-direction: row;;
-    border: none;
-    text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
-    max-width: 80%;
+    text-overflow: ellipsis;
+}
+.textInput, .editInput{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border: none;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 100%;
     flex: 1;
 }
 
-.tempInput{
+
+.editInput{
     background-color: unset;
     margin: 0 2%;
     width: 90%;
