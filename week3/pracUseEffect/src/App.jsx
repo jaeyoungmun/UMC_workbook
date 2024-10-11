@@ -8,6 +8,10 @@ import Search from './pages/search/Search'
 import Movies from './pages/movies/Movies'
 import {createBrowserRouter, RouterProvider} from 'react-router-dom'
 import './App.css'
+import NowPlaying from './pages/Categorys/nowplaying'
+import Popular from './pages/Categorys/popular'
+import TopRated from './pages/Categorys/toprated'
+import UpComing from './pages/Categorys/upcoming'
 
 
 const router = createBrowserRouter([
@@ -34,7 +38,25 @@ const router = createBrowserRouter([
       },
       {
         path: 'movies',
-        element: <Movies/>
+        element: <Movies/>,
+        children: [
+          {
+            path: 'nowplaying',
+            element: <NowPlaying/>
+          },
+          {
+            path: 'popular',
+            element: <Popular/>
+          },
+          {
+            path: 'toprated',
+            element: <TopRated/>
+          },
+          {
+            path: 'upcoming',
+            element: <UpComing/>
+          },
+        ]
       }
     ]
   }
