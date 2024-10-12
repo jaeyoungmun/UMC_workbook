@@ -4,7 +4,7 @@ import MovieCard from "../../components/Card/MovieCard"
 import * as S from "./HomePage.styled";
 const HomePage = () => {
     const [movies, setMovies] = useState([])
-
+    
     useEffect(() => {
         const getMovies = async () => {
             const movies = await axios.get('https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc', {

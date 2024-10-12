@@ -18,7 +18,7 @@ const NowPlaying = () => {
         getMovies()
     }, []);
     // console.log(movies.data.results);
-    console.log("nowplaying");
+    // console.log("nowplaying");
     
     return (
         <S.Container>

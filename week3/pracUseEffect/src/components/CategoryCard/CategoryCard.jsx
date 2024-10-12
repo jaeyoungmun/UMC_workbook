@@ -6,7 +6,7 @@ function CategoryCard(props){
     return <S.ImgLink to={`${page_path}`}>
         <S.Container>
             <S.Text color={text_color}>{text}</S.Text>
-            <S.ImgBox src={`${img_path}`} width='200px' alt="" />
+            <S.ImgBox src={`${img_path}`} alt="" />
         </S.Container>
     </S.ImgLink>
     
